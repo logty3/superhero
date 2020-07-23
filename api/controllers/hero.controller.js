@@ -6,7 +6,11 @@ const multer = require("multer");
 const imageTypes = /jpeg|jpg|gif|png/;
 
 const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
+  destination: async function (req, file, cb) {
+    try {
+      await fs.promises.mkdir("./uploads");
+    } catch (err) {}
+
     cb(null, "./uploads");
   },
   filename: function (req, file, cb) {
